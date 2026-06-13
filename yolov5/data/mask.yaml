@@ -1,0 +1,9 @@
+
+# 口罩检测数据集
+path: E:/a1234/daima/kozhao/yolov5_dataset
+train: images/train
+val: images/val
+
+nc: 2
+names: ['mask', 'nomask']
+
