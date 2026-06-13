@@ -1,9 +1,6 @@
-﻿# Cloudflare Pages 配置
-# 连接 GitHub 仓库后，Cloudflare 会自动使用此配置
-
-name = "mask-detection"
+﻿name = "mask-detection"
 compatibility_date = "2026-06-13"
 
-[pages]
-  build_command = ""
-  build_output_dir = "public"
+[assets]
+directory = "public"
+not_found_handling = "single_page_application"
