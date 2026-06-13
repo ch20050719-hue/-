@@ -1,0 +1,3 @@
+﻿# Cloudflare Pages 路由配置
+# 将根路径指向 index.html
+/*    /index.html    200

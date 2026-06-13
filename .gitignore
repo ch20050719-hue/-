@@ -32,3 +32,6 @@ venv/
 .ipynb_checkpoints/
 # Git
 .git/
+
+# 其他
+github_key.txt
