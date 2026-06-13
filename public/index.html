@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -380,7 +380,7 @@
     formData.append('image', currentFile);
 
     try {
-      const res = await fetch(API_BASE + '/predict'), { method: 'POST', body: formData });
+      const res = await fetch(API_BASE + '/predict', { method: 'POST', body: formData });
       const data = await res.json();
       if (!data.success) {
         setStatus(data.error || '检测失败', 'error');

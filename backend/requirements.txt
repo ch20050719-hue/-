@@ -1,0 +1,25 @@
+﻿# 后端生产依赖 (mask-detection)
+# 使用: pip install -r requirements.txt
+
+# Flask Web 框架
+flask>=3.0
+
+# 图片处理
+Pillow>=10.3.0
+numpy>=1.23.5
+
+# PyTorch (CUDA 版请根据 VPS 显卡自行安装)
+torch>=1.8.0
+torchvision>=0.9.0
+
+# YOLOv5 依赖 (仅生产所需)
+opencv-python-headless>=4.1.1
+PyYAML>=5.3.1
+tqdm>=4.66.3
+matplotlib>=3.3
+requests>=2.32.2
+scipy>=1.4.1
+psutil
+
+# 生产 WSGI 服务器
+gunicorn>=22.0
