@@ -26,15 +26,13 @@ cd backend
 python app.py
 ```
 
-后端运行在 http://127.0.0.1:5000
+后端运行在 你的IP
 
 ### 2. 配置前端 API 地址
 
 打开 `public/index.html`，修改顶部 `API_BASE` 变量：
 
-```js
-// 本地调试
-const API_BASE = "http://127.0.0.1:5000";
+
 
 // VPS 部署
 const API_BASE = "http://你的VPS_IP:5000";
