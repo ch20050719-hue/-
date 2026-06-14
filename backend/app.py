@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 口罩检测系统 - Flask Web 后端
 """
@@ -6,6 +6,7 @@ import io, os, base64, json, sys
 from pathlib import Path
 import torch
 from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS
 from PIL import Image, ImageDraw, ImageFont
 import numpy as np
 
@@ -22,6 +23,7 @@ MAX_IMAGE_SIZE = 16 * 1024 * 1024
 ALLOWED_EXTENSIONS = {"jpg", "jpeg", "png", "bmp", "tiff", "webp"}
 
 app = Flask(__name__)
+CORS(app)
 app.config["MAX_CONTENT_LENGTH"] = MAX_IMAGE_SIZE
 
 print(f"正在加载模型: {MODEL_PATH}")

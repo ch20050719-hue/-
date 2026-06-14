@@ -35,3 +35,9 @@ venv/
 
 # 其他
 github_key.txt
+
+# IDE
+.reasonix/
+# Duplicate
+MaskDetect-YOLOv4-PyTorch-master (1)/
+

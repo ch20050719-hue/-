@@ -1,6 +1,6 @@
-﻿name = "mask-detection"
+name = "mask-detection"
 compatibility_date = "2026-06-13"
 
 [assets]
 directory = "public"
-not_found_handling = "single_page_application"
+not_found_handling = "single-page-application"

@@ -41,7 +41,7 @@ def process_annotation(txt_dir, txt_file):
             continue
         class_id, x_center, y_center, width, height = map(float, parts)
         
-        class_map = {4: 0, 3: 1, 0: 0, 1: 1}
+        class_map = {3: 0, 4: 1, 0: 0, 1: 1}  # 原始TXT类别3=有口罩(mask),类别4=无口罩(nomask)
         class_id = class_map.get(int(class_id), int(class_id))
         
         x1 = int((x_center - width / 2) * img_w)
