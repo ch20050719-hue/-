@@ -3,7 +3,7 @@
 口罩检测系统 - Flask Web 后端
 支持: 图片检测 / 视频检测 / 摄像头检测
 """
-import io, os, base64, json, sys, tempfile, time
+import io, os, base64, json, sys, tempfile, time, uuid, subprocess
 from pathlib import Path
 import torch
 from flask import Flask, request, jsonify, render_template
@@ -28,6 +28,17 @@ VIDEO_EXTENSIONS = {"mp4", "avi", "mov", "mkv", "wmv", "flv"}
 app = Flask(__name__)
 CORS(app)
 app.config["MAX_CONTENT_LENGTH"] = MAX_VIDEO_SIZE  # 200MB 统一上限
+
+# 启动时清理过期的检测视频（保留最近 1 小时）
+STATIC_VIDEOS_DIR = Path(__file__).parent / "static" / "videos"
+STATIC_VIDEOS_DIR.mkdir(parents=True, exist_ok=True)
+try:
+    now = time.time()
+    for f in STATIC_VIDEOS_DIR.iterdir():
+        if f.is_file() and f.suffix == ".mp4" and (now - f.stat().st_mtime) > 3600:
+            f.unlink(missing_ok=True)
+except Exception:
+    pass
 
 # ────────────── 字体工具 ──────────────
 _FONT_CACHE = None
@@ -193,14 +204,13 @@ def predict_video():
         tmp_in.write(video_bytes)
         tmp_in_path = tmp_in.name
 
-    out_path = tempfile.mktemp(suffix=".mp4")
-
     try:
         import cv2
     except ImportError:
         os.unlink(tmp_in_path)
         return jsonify({"error": "服务器缺少 OpenCV (cv2)，无法处理视频"}), 500
 
+    frames_dir = None
     try:
         cap = cv2.VideoCapture(tmp_in_path)
         if not cap.isOpened():
@@ -215,8 +225,6 @@ def predict_video():
 
         # 每间隔 orig_fps 帧采样一次（即 1fps）
         sample_interval = max(1, int(round(orig_fps)))
-        fourcc = cv2.VideoWriter_fourcc(*"mp4v")
-        writer = cv2.VideoWriter(out_path, fourcc, orig_fps, (width, height))
 
         frame_idx = 0
         processed_count = 0
@@ -225,6 +233,9 @@ def predict_video():
 
         # 累计统计
         agg_stats = {"mask": 0, "nomask": 0, "total_faces": 0, "frame_count": 0}
+
+        # 临时目录存放 JPEG 帧（用于 FFMPEG 编码）
+        frames_dir = tempfile.mkdtemp()
 
         while True:
             ret, frame_bgr = cap.read()
@@ -259,31 +270,50 @@ def predict_video():
                     "total": frame_stats.get("total", 0),
                 })
 
-                # 标注后的 PIL → OpenCV BGR 写入
+                # 标注后的 PIL → 保存为 JPEG
                 anno_rgb = np.array(pil_img)
                 anno_bgr = cv2.cvtColor(anno_rgb, cv2.COLOR_RGB2BGR)
-                writer.write(anno_bgr)
+                cv2.imwrite(os.path.join(frames_dir, f"frame_{frame_idx:08d}.jpg"), anno_bgr)
 
             elif anno_pil_cache is not None:
                 # 非采样帧：重复最近的标注帧
                 anno_rgb = np.array(anno_pil_cache)
                 anno_bgr = cv2.cvtColor(anno_rgb, cv2.COLOR_RGB2BGR)
-                writer.write(anno_bgr)
+                cv2.imwrite(os.path.join(frames_dir, f"frame_{frame_idx:08d}.jpg"), anno_bgr)
             else:
                 # 刚开始还未有标注帧，写入原始帧
-                writer.write(frame_bgr)
+                cv2.imwrite(os.path.join(frames_dir, f"frame_{frame_idx:08d}.jpg"), frame_bgr)
 
             frame_idx += 1
 
         cap.release()
-        writer.release()
 
-        # ── 读出输出视频，base64 编码 ──
-        with open(out_path, "rb") as f:
-            video_b64 = base64.b64encode(f.read()).decode("utf-8")
+        # ── 使用 FFMPEG 编码 H.264 MP4 ──
+        try:
+            from imageio_ffmpeg import get_ffmpeg_exe
+            ffmpeg_exe = get_ffmpeg_exe()
+        except ImportError:
+            ffmpeg_exe = "ffmpeg"  # 回退，假设在 PATH 中
+
+        video_filename = f"{uuid.uuid4().hex}.mp4"
+        static_videos_dir = Path(__file__).parent / "static" / "videos"
+        static_videos_dir.mkdir(parents=True, exist_ok=True)
+        h264_out = str(static_videos_dir / video_filename)
+
+        ffmpeg_cmd = [
+            ffmpeg_exe, "-y",
+            "-framerate", str(orig_fps),
+            "-i", os.path.join(frames_dir, "frame_%08d.jpg"),
+            "-c:v", "libx264",
+            "-preset", "fast",
+            "-pix_fmt", "yuv420p",
+            "-movflags", "+faststart",
+            "-crf", "23",
+            h264_out
+        ]
+        subprocess.run(ffmpeg_cmd, capture_output=True, timeout=300)
 
         # ── 计算平均置信度（仅最后一个 sampled frame 的） ──
-        # 简化：不跨帧平均，前端用总检测数/帧数
         avg_conf = 0
         if agg_stats["total_faces"] > 0:
             avg_conf = round(
@@ -293,7 +323,7 @@ def predict_video():
 
         return jsonify({
             "success": True,
-            "video": f"data:video/mp4;base64,{video_b64}",
+            "video_url": f"/static/videos/{video_filename}",
             "duration_sec": round(duration_sec, 1),
             "total_frames": total_frames,
             "processed_frames": processed_count,
@@ -316,8 +346,10 @@ def predict_video():
             os.unlink(tmp_in_path)
         except Exception:
             pass
+        # 清理帧目录
         try:
-            os.unlink(out_path)
+            import shutil
+            shutil.rmtree(frames_dir)
         except Exception:
             pass
 

@@ -43,3 +43,6 @@ reasonix.toml
 # Duplicate
 MaskDetect-YOLOv4-PyTorch-master (1)/
 
+# 本地检测视频缓存（不提交到 git）
+static/videos/
+
