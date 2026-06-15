@@ -13,15 +13,15 @@
     color: #fff;
   }
   .container { max-width: 1100px; margin: 0 auto; padding: 30px 20px; }
-  
-  /* 头部 */
+
+  /* ── 头部 ── */
   header {
     text-align: center;
     padding: 28px 0 18px;
     background: rgba(255,255,255,0.06);
     backdrop-filter: blur(12px);
     border-radius: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 16px;
     border: 1px solid rgba(255,255,255,0.08);
   }
   header h1 {
@@ -35,34 +35,61 @@
   }
   header p { color: rgba(255,255,255,0.55); font-size: 14px; margin-top: 6px; }
 
-  /* 上传区域 */
+  /* ── 标签页导航 ── */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 14px;
+    padding: 4px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    background: transparent;
+    color: rgba(255,255,255,0.45);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+  }
+  .tab-btn:hover { color: rgba(255,255,255,0.75); background: rgba(255,255,255,0.05); }
+  .tab-btn.active {
+    background: rgba(58,123,213,0.25);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(58,123,213,0.2);
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ── 上传区域 ── */
   .upload-area {
     background: rgba(255,255,255,0.05);
     border: 2px dashed rgba(255,255,255,0.2);
     border-radius: 16px;
-    padding: 50px 30px;
+    padding: 40px 30px;
     text-align: center;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
   .upload-area:hover, .upload-area.dragover {
     border-color: #3a7bd5;
     background: rgba(58,123,213,0.1);
   }
-  .upload-icon {
-    font-size: 48px;
-    margin-bottom: 12px;
-    opacity: 0.6;
-  }
-  .upload-area p { color: rgba(255,255,255,0.6); font-size: 15px; }
-  .upload-area .sub { color: rgba(255,255,255,0.35); font-size: 13px; margin-top: 6px; }
+  .upload-icon { font-size: 42px; margin-bottom: 10px; opacity: 0.6; }
+  .upload-area p { color: rgba(255,255,255,0.6); font-size: 14px; }
+  .upload-area .sub { color: rgba(255,255,255,0.35); font-size: 12px; margin-top: 4px; }
   .upload-area input[type="file"] { display: none; }
 
-  /* 状态栏 */
+  /* ── 状态栏 ── */
   .status-bar {
     display: flex; justify-content: center; align-items: center;
-    min-height: 36px; margin-bottom: 18px;
+    min-height: 36px; margin-bottom: 14px;
     font-size: 14px; color: rgba(255,255,255,0.6);
   }
   .status-bar .spinner {
@@ -77,17 +104,7 @@
   .status-bar .error { color: #ff6b6b; }
   .status-bar .success { color: #51cf66; }
 
-  /* 主内容区: 左右两栏 */
-  .main-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-  @media (max-width: 768px) {
-    .main-grid { grid-template-columns: 1fr; }
-  }
-
-  /* 图片面板 */
+  /* ── 面板 ── */
   .panel {
     background: rgba(255,255,255,0.05);
     border-radius: 16px;
@@ -95,7 +112,7 @@
     border: 1px solid rgba(255,255,255,0.08);
   }
   .panel-header {
-    padding: 14px 18px;
+    padding: 12px 16px;
     font-size: 14px;
     font-weight: 600;
     background: rgba(255,255,255,0.04);
@@ -109,46 +126,50 @@
   }
   .panel-body {
     padding: 14px;
-    min-height: 320px;
+    min-height: 300px;
     display: flex; align-items: center; justify-content: center;
+    flex-direction: column;
   }
-  .panel-body img {
-    max-width: 100%; max-height: 420px;
+  .panel-body img, .panel-body video {
+    max-width: 100%; max-height: 400px;
     border-radius: 10px;
     display: none;
   }
+  .panel-body img.show, .panel-body video.show { display: block; }
   .panel-body .placeholder {
     color: rgba(255,255,255,0.25);
     font-size: 13px;
     text-align: center;
     line-height: 1.8;
   }
-  .panel-body img.show { display: block; }
   .panel-body .placeholder.hide { display: none; }
 
-  /* 统计卡片 */
-  .stats-grid {
+  /* ── 双栏网格 ── */
+  .main-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 20px;
+  }
+  @media (max-width: 768px) {
+    .main-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── 统计卡片 ── */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    margin: 16px 0;
   }
   .stat-card {
     background: rgba(255,255,255,0.06);
     border-radius: 12px;
-    padding: 16px;
+    padding: 14px;
     text-align: center;
     border: 1px solid rgba(255,255,255,0.06);
   }
-  .stat-card .num {
-    font-size: 28px;
-    font-weight: 700;
-  }
-  .stat-card .label {
-    font-size: 12px;
-    color: rgba(255,255,255,0.45);
-    margin-top: 4px;
-  }
+  .stat-card .num { font-size: 24px; font-weight: 700; }
+  .stat-card .label { font-size: 11px; color: rgba(255,255,255,0.45); margin-top: 4px; }
   .stat-card.green .num { color: #51cf66; }
   .stat-card.red .num { color: #ff6b6b; }
   .stat-card.blue .num { color: #339af0; }
@@ -156,36 +177,31 @@
   .stat-card.red { border-color: rgba(255,107,107,0.2); }
   .stat-card.blue { border-color: rgba(51,154,240,0.2); }
 
-  /* 检测结果列表 */
+  /* ── 检测列表 ── */
   .detect-list {
     background: rgba(255,255,255,0.04);
     border-radius: 12px;
-    max-height: 200px;
+    max-height: 180px;
     overflow-y: auto;
-    padding: 10px 0;
+    padding: 8px 0;
   }
   .detect-list::-webkit-scrollbar { width: 4px; }
   .detect-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
   .detect-item {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 8px 16px;
+    padding: 6px 14px;
     font-size: 13px;
     border-left: 3px solid transparent;
   }
-  .detect-item .cls {
-    font-weight: 600;
-  }
+  .detect-item .cls { font-weight: 600; }
   .detect-item .conf { color: rgba(255,255,255,0.5); }
   .detect-item.mask { border-left-color: #51cf66; }
   .detect-item.mask .cls { color: #51cf66; }
   .detect-item.nomask { border-left-color: #ff6b6b; }
   .detect-item.nomask .cls { color: #ff6b6b; }
-  .empty-list {
-    text-align: center; padding: 24px;
-    color: rgba(255,255,255,0.3); font-size: 13px;
-  }
+  .empty-list { text-align: center; padding: 20px; color: rgba(255,255,255,0.3); font-size: 13px; }
 
-  /* 按钮 */
+  /* ── 按钮 ── */
   .btn {
     display: inline-flex; align-items: center; gap: 6px;
     padding: 9px 22px; border-radius: 10px; border: none;
@@ -202,14 +218,72 @@
     color: rgba(255,255,255,0.7);
   }
   .btn-outline:hover { background: rgba(255,255,255,0.08); box-shadow: none; }
+  .btn-danger {
+    background: linear-gradient(90deg, #e74c3c, #c0392b);
+  }
+  .btn-danger:hover { box-shadow: 0 6px 20px rgba(231,76,60,0.3); }
+  .btn-success {
+    background: linear-gradient(90deg, #27ae60, #2ecc71);
+  }
+  .btn-success:hover { box-shadow: 0 6px 20px rgba(39,174,96,0.3); }
 
   .action-row {
-    display: flex; gap: 12px; justify-content: center;
-    margin: 16px 0 4px;
+    display: flex; gap: 10px; justify-content: center;
+    margin: 12px 0 4px;
+    flex-wrap: wrap;
   }
 
-  /* 页脚 */
+  /* ── 帧时间线 ── */
+  .timeline {
+    max-height: 160px;
+    overflow-y: auto;
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    margin-top: 12px;
+  }
+  .timeline-item {
+    display: flex; gap: 12px; align-items: center;
+    padding: 6px 14px;
+    font-size: 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .timeline-item:last-child { border-bottom: none; }
+  .timeline-item .t { color: rgba(255,255,255,0.4); min-width: 50px; }
+  .timeline-item .bar-wrap { flex: 1; height: 6px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; display: flex; }
+  .timeline-item .bar-mask { height: 100%; background: #51cf66; transition: width 0.3s; }
+  .timeline-item .bar-nomask { height: 100%; background: #ff6b6b; transition: width 0.3s; }
+  .timeline-item .counts { min-width: 80px; text-align: right; color: rgba(255,255,255,0.5); }
+
+  /* ── 摄像头画面 ── */
+  #cameraVideo {
+    width: 100%;
+    max-height: 360px;
+    border-radius: 10px;
+    background: #000;
+    transform: scaleX(-1); /* 镜像 */
+  }
+  .camera-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 768px) {
+    .camera-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── 页脚 ── */
   footer { text-align: center; margin-top: 40px; padding: 20px 0; color: rgba(255,255,255,0.2); font-size: 12px; }
+
+  /* ── 实时统计 ── */
+  .live-stats {
+    display: flex; gap: 16px; justify-content: center;
+    margin-top: 12px; padding: 10px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 12px;
+    font-size: 13px;
+  }
+  .live-stats span { color: rgba(255,255,255,0.5); }
+  .live-stats strong { color: #fff; }
 </style>
 </head>
 <body>
@@ -217,238 +291,265 @@
 <div class="container">
   <header>
     <h1>🛡️ 口罩检测系统</h1>
-    <p>上传图片，AI 自动检测是否佩戴口罩 · Mask Detection via YOLOv5</p>
+    <p>AI 自动检测是否佩戴口罩 · 支持图片 / 视频 / 摄像头实时检测</p>
   </header>
 
-  <!-- 上传区域 -->
-  <div class="upload-area" id="dropZone">
-    <div class="upload-icon">📁</div>
-    <p><strong>点击选择图片</strong> 或拖拽文件到此处</p>
-    <p class="sub">支持 JPG / PNG / BMP / WebP，最大 16MB</p>
-    <input type="file" id="fileInput" accept="image/jpeg,image/png,image/bmp,image/webp">
+  <!-- ═══ 标签页导航 ═══ -->
+  <div class="tabs" id="tabNav">
+    <button class="tab-btn active" data-tab="image">🖼 图片检测</button>
+    <button class="tab-btn" data-tab="video">🎬 视频检测</button>
+    <button class="tab-btn" data-tab="camera">📷 摄像头检测</button>
   </div>
 
-  <!-- 状态栏 -->
-  <div class="status-bar" id="statusBar">
-    <span class="spinner"></span>
-    <span id="statusText">等待上传...</span>
-  </div>
+  <!-- ════════════════════════════════
+       标签页1：图片检测
+       ════════════════════════════════ -->
+  <div class="tab-content active" id="tabImage">
+    <div class="upload-area" id="imageDropZone">
+      <div class="upload-icon">📁</div>
+      <p><strong>点击选择图片</strong> 或拖拽文件到此处</p>
+      <p class="sub">支持 JPG / PNG / BMP / WebP，最大 16MB</p>
+      <input type="file" id="imageFileInput" accept="image/jpeg,image/png,image/bmp,image/webp">
+    </div>
 
-  <!-- 操作按钮 -->
-  <div class="action-row">
-    <button class="btn" id="detectBtn" disabled>
-      🔍 开始检测
-    </button>
-    <button class="btn btn-outline" id="resetBtn">
-      🔄 重置
-    </button>
-  </div>
+    <div class="status-bar" id="imageStatusBar">
+      <span class="spinner"></span>
+      <span id="imageStatusText">等待上传...</span>
+    </div>
 
-  <!-- 主内容 -->
-  <div class="main-grid" style="margin-top: 20px;">
-    <!-- 左侧：原图 -->
-    <div class="panel">
-      <div class="panel-header">
-        <span>📷 原始图片</span>
-        <span class="badge" id="originalName">未选择</span>
+    <div class="action-row">
+      <button class="btn" id="imageDetectBtn" disabled>🔍 开始检测</button>
+      <button class="btn btn-outline" id="imageResetBtn">🔄 重置</button>
+    </div>
+
+    <div class="main-grid" style="margin-top: 16px;">
+      <div class="panel">
+        <div class="panel-header">
+          <span>📷 原始图片</span>
+          <span class="badge" id="imageOriginalName">未选择</span>
+        </div>
+        <div class="panel-body">
+          <img id="imageOriginalImg" alt="原始图片">
+          <div class="placeholder" id="imageOriginalPlaceholder">
+            请上传一张含有人脸的图片<br>系统将自动检测口罩佩戴情况
+          </div>
+        </div>
       </div>
-      <div class="panel-body">
-        <img id="originalImg" alt="原始图片">
-        <div class="placeholder" id="originalPlaceholder">
-          请上传一张含有人脸的图片<br>
-          系统将自动检测口罩佩戴情况
+      <div class="panel">
+        <div class="panel-header">
+          <span>🎯 检测结果</span>
+          <span class="badge" id="imageResultBadge">等待检测</span>
+        </div>
+        <div class="panel-body">
+          <img id="imageResultImg" alt="检测结果">
+          <div class="placeholder" id="imageResultPlaceholder">
+            检测后的标注图片将显示在此处
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- 右侧：检测结果 -->
-    <div class="panel">
-      <div class="panel-header">
-        <span>🎯 检测结果</span>
-        <span class="badge" id="resultBadge">等待检测</span>
+    <div class="stats-grid" id="imageStatsGrid" style="display:none; margin-top:16px;">
+      <div class="stat-card green">
+        <div class="num" id="imageStatMask">0</div>
+        <div class="label">😷 已佩戴口罩</div>
       </div>
-      <div class="panel-body">
-        <img id="resultImg" alt="检测结果">
-        <div class="placeholder" id="resultPlaceholder">
-          检测后的标注图片将显示在此处
+      <div class="stat-card red">
+        <div class="num" id="imageStatNoMask">0</div>
+        <div class="label">⚠️ 未佩戴口罩</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="num" id="imageStatTotal">0</div>
+        <div class="label">👤 检测总人数</div>
+      </div>
+      <div class="stat-card blue">
+        <div class="num" id="imageStatAvgConf">0%</div>
+        <div class="label">📊 平均置信度</div>
+      </div>
+    </div>
+
+    <div class="panel" id="imageDetailPanel" style="display:none; margin-top:16px;">
+      <div class="panel-header">
+        <span>📋 检测明细</span>
+        <span class="badge" id="imageDetailCount">0 个目标</span>
+      </div>
+      <div class="detect-list" id="imageDetectList"></div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       标签页2：视频检测
+       ════════════════════════════════ -->
+  <div class="tab-content" id="tabVideo">
+    <div class="upload-area" id="videoDropZone">
+      <div class="upload-icon">🎬</div>
+      <p><strong>点击选择视频</strong> 或拖拽文件到此处</p>
+      <p class="sub">支持 MP4 / AVI / MOV / MKV / WMV / FLV，最大 200MB，按 1fps 采样检测</p>
+      <input type="file" id="videoFileInput" accept="video/mp4,video/avi,video/quicktime,video/x-matroska,video/x-ms-wmv,video/x-flv">
+    </div>
+
+    <div class="status-bar" id="videoStatusBar">
+      <span class="spinner"></span>
+      <span id="videoStatusText">等待上传...</span>
+    </div>
+
+    <div class="action-row">
+      <button class="btn" id="videoDetectBtn" disabled>🎬 开始检测</button>
+      <button class="btn btn-outline" id="videoResetBtn">🔄 重置</button>
+    </div>
+
+    <!-- 视频结果区域 -->
+    <div id="videoResultArea" style="display:none; margin-top:16px;">
+      <div class="panel">
+        <div class="panel-header">
+          <span>🎥 标注视频结果</span>
+          <span class="badge" id="videoResultBadge">等待检测</span>
+        </div>
+        <div class="panel-body">
+          <video id="videoResultPlayer" controls></video>
+          <div class="placeholder" id="videoResultPlaceholder">
+            检测完成后的标注视频将在此播放
+          </div>
+        </div>
+      </div>
+
+      <!-- 视频统计 -->
+      <div class="stats-grid" id="videoStatsGrid" style="margin-top:12px;">
+        <div class="stat-card blue">
+          <div class="num" id="videoStatDuration">0s</div>
+          <div class="label">⏱ 视频时长</div>
+        </div>
+        <div class="stat-card green">
+          <div class="num" id="videoStatMask">0</div>
+          <div class="label">😷 戴口罩（总人次）</div>
+        </div>
+        <div class="stat-card red">
+          <div class="num" id="videoStatNoMask">0</div>
+          <div class="label">⚠️ 未戴口罩（总人次）</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="num" id="videoStatFrames">0</div>
+          <div class="label">🎞 处理帧数</div>
+        </div>
+      </div>
+
+      <!-- 帧时间线 -->
+      <div class="panel" style="margin-top:12px;">
+        <div class="panel-header">
+          <span>📊 帧时间线（按秒采样）</span>
+          <span class="badge" id="videoTimelineCount">0 帧</span>
+        </div>
+        <div class="timeline" id="videoTimeline"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════
+       标签页3：摄像头检测
+       ════════════════════════════════ -->
+  <div class="tab-content" id="tabCamera">
+    <div class="action-row" style="margin-bottom:16px;">
+      <button class="btn btn-success" id="cameraStartBtn">📷 打开摄像头</button>
+      <button class="btn btn-danger" id="cameraStopBtn" disabled>⏹ 关闭摄像头</button>
+    </div>
+
+    <div class="status-bar" id="cameraStatusBar">
+      <span class="spinner"></span>
+      <span id="cameraStatusText">点击"打开摄像头"开始实时检测</span>
+    </div>
+
+    <div class="camera-grid">
+      <div class="panel">
+        <div class="panel-header">
+          <span>📷 摄像头实时画面</span>
+          <span class="badge" id="cameraLiveBadge">等待中</span>
+        </div>
+        <div class="panel-body">
+          <video id="cameraVideo" autoplay playsinline></video>
+          <div class="placeholder" id="cameraPlaceholder">
+            摄像头画面将显示在此处
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-header">
+          <span>🎯 最近检测结果</span>
+          <span class="badge" id="cameraResultBadge">等待检测</span>
+        </div>
+        <div class="panel-body">
+          <img id="cameraResultImg" alt="检测结果">
+          <div class="placeholder" id="cameraResultPlaceholder">
+            最近的检测标注结果将显示在此处
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- 统计信息 -->
-  <div class="stats-grid" id="statsGrid" style="display: none; margin-top: 24px;">
-    <div class="stat-card green">
-      <div class="num" id="statMask">0</div>
-      <div class="label">😷 已佩戴口罩</div>
+    <!-- 摄像头实时统计 -->
+    <div class="live-stats" id="cameraLiveStats" style="display:none;">
+      <span>检测次数: <strong id="camDetectCount">0</strong></span>
+      <span>😷 已佩戴口罩: <strong id="camMaskCount" style="color:#51cf66;">0</strong></span>
+      <span>⚠️ 未佩戴口罩: <strong id="camNoMaskCount" style="color:#ff6b6b;">0</strong></span>
+      <span>状态: <strong id="camStatusIndicator" style="color:#f39c12;">● 等待中</strong></span>
     </div>
-    <div class="stat-card red">
-      <div class="num" id="statNoMask">0</div>
-      <div class="label">⚠️ 未佩戴口罩</div>
-    </div>
-    <div class="stat-card blue">
-      <div class="num" id="statTotal">0</div>
-      <div class="label">👤 检测总人数</div>
-    </div>
-    <div class="stat-card blue">
-      <div class="num" id="statAvgConf">0%</div>
-      <div class="label">📊 平均置信度</div>
+
+    <div class="panel" id="cameraDetailPanel" style="display:none; margin-top:16px;">
+      <div class="panel-header">
+        <span>📋 最近检测明细</span>
+        <span class="badge" id="cameraDetailCount">0 个目标</span>
+      </div>
+      <div class="detect-list" id="cameraDetectList"></div>
     </div>
   </div>
 
-  <!-- 检测列表 -->
-  <div class="panel" id="detailPanel" style="display: none; margin-top: 24px;">
-    <div class="panel-header">
-      <span>📋 检测明细</span>
-      <span class="badge" id="detailCount">0 个目标</span>
-    </div>
-    <div class="detect-list" id="detectList"></div>
-  </div>
-
-  <footer>Powered by YOLOv5 · Flask · 口罩检测系统</footer>
+  <footer>Powered by YOLOv5 · Flask · 口罩检测系统 v2.0</footer>
 </div>
 
 <script>
-  const dropZone = document.getElementById('dropZone');
-  const fileInput = document.getElementById('fileInput');
-  const originalImg = document.getElementById('originalImg');
-  const resultImg = document.getElementById('resultImg');
-  const originalPlaceholder = document.getElementById('originalPlaceholder');
-  const resultPlaceholder = document.getElementById('resultPlaceholder');
-  const originalName = document.getElementById('originalName');
-  const statusBar = document.getElementById('statusBar');
-  const statusText = document.getElementById('statusText');
-  const detectBtn = document.getElementById('detectBtn');
-  const resetBtn = document.getElementById('resetBtn');
-  const statsGrid = document.getElementById('statsGrid');
-  const detailPanel = document.getElementById('detailPanel');
-  const detectList = document.getElementById('detectList');
-  const detailCount = document.getElementById('detailCount');
-  const resultBadge = document.getElementById('resultBadge');
+(function(){
+  'use strict';
 
-  let currentFile = null;
+  // ═══════════════════════════════════════
+  //  标签页切换
+  // ═══════════════════════════════════════
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabContents = {
+    image: document.getElementById('tabImage'),
+    video: document.getElementById('tabVideo'),
+    camera: document.getElementById('tabCamera'),
+  };
 
-  // ── 上传交互 ──
-  dropZone.addEventListener('click', () => fileInput.click());
-  dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('dragover'); });
-  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
-  dropZone.addEventListener('drop', (e) => {
-    e.preventDefault();
-    dropZone.classList.remove('dragover');
-    if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
-  });
-  fileInput.addEventListener('change', () => { if (fileInput.files.length) handleFile(fileInput.files[0]); });
-
-  // ── 处理文件 ──
-  function handleFile(file) {
-    const ext = file.name.split('.').pop().toLowerCase();
-    if (!['jpg','jpeg','png','bmp','webp'].includes(ext)) {
-      setStatus('不支持的文件格式', 'error');
-      return;
-    }
-    if (file.size > 16 * 1024 * 1024) {
-      setStatus('图片过大，最大 16MB', 'error');
-      return;
-    }
-    currentFile = file;
-    originalName.textContent = file.name;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      originalImg.src = e.target.result;
-      originalImg.classList.add('show');
-      originalPlaceholder.classList.add('hide');
-      resetResults();
-      detectBtn.disabled = false;
-      setStatus(`已选择: ${file.name} (${(file.size/1024/1024).toFixed(1)} MB)`, 'success');
-    };
-    reader.readAsDataURL(file);
-  }
-
-  // ── 检测 ──
-  detectBtn.addEventListener('click', async () => {
-    if (!currentFile) return;
-    setStatus('正在检测中，请稍候...', 'loading');
-    detectBtn.disabled = true;
-
-    const formData = new FormData();
-    formData.append('image', currentFile);
-
-    try {
-      const res = await fetch('/predict', { method: 'POST', body: formData });
-      const data = await res.json();
-      if (!data.success) {
-        setStatus(data.error || '检测失败', 'error');
-        detectBtn.disabled = false;
-        return;
-      }
-
-      // 显示结果图片
-      resultImg.src = data.image;
-      resultImg.classList.add('show');
-      resultPlaceholder.classList.add('hide');
-      resultBadge.textContent = `${data.detections.length} 个目标`;
-
-      // 显示统计
-      showStats(data.stats, data.detections);
-
-      // 显示明细
-      showDetections(data.detections);
-
-      setStatus(`检测完成！共检测到 ${data.stats.total} 个人脸`, 'success');
-    } catch (err) {
-      setStatus('请求失败，请确保后端服务已启动', 'error');
-    }
-    detectBtn.disabled = false;
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      Object.keys(tabContents).forEach(k => {
+        tabContents[k].classList.toggle('active', k === btn.dataset.tab);
+      });
+    });
   });
 
-  // ── 重置 ──
-  resetBtn.addEventListener('click', () => {
-    currentFile = null;
-    fileInput.value = '';
-    originalImg.classList.remove('show');
-    resultImg.classList.remove('show');
-    originalPlaceholder.classList.remove('hide');
-    resultPlaceholder.classList.remove('hide');
-    originalName.textContent = '未选择';
-    resultBadge.textContent = '等待检测';
-    detectBtn.disabled = true;
-    statsGrid.style.display = 'none';
-    detailPanel.style.display = 'none';
-    detectList.innerHTML = '';
-    setStatus('等待上传...', '');
-  });
-
-  function resetResults() {
-    resultImg.classList.remove('show');
-    resultPlaceholder.classList.remove('hide');
-    resultBadge.textContent = '等待检测';
-    statsGrid.style.display = 'none';
-    detailPanel.style.display = 'none';
+  // ═══════════════════════════════════════
+  //  共享工具
+  // ═══════════════════════════════════════
+  function setStatus(bar, text, type) {
+    const statusText = bar.querySelector('span:last-child');
+    statusText.textContent = text;
+    bar.className = 'status-bar';
+    if (type === 'loading') bar.classList.add('loading');
+    else if (type === 'error') statusText.className = 'error';
+    else if (type === 'success') statusText.className = 'success';
+    else statusText.className = '';
   }
 
-  // ── 统计 ──
-  function showStats(stats, detections) {
-    document.getElementById('statMask').textContent = stats.mask || 0;
-    document.getElementById('statNoMask').textContent = stats.nomask || 0;
-    document.getElementById('statTotal').textContent = stats.total || 0;
-    const avgConf = detections.length
-      ? (detections.reduce((s, d) => s + d.confidence, 0) / detections.length * 100).toFixed(1)
-      : 0;
-    document.getElementById('statAvgConf').textContent = avgConf + '%';
-    statsGrid.style.display = 'grid';
-  }
-
-  // ── 检测明细 ──
-  function showDetections(detections) {
-    detectList.innerHTML = '';
-    detailPanel.style.display = 'block';
-    detailCount.textContent = detections.length + ' 个目标';
-
+  function showDetections(containerId, detections, countEl) {
+    const list = document.getElementById(containerId);
+    list.innerHTML = '';
+    countEl.textContent = detections.length + ' 个目标';
     if (!detections.length) {
-      detectList.innerHTML = '<div class="empty-list">未检测到目标</div>';
+      list.innerHTML = '<div class="empty-list">未检测到目标</div>';
       return;
     }
-
     detections.forEach((d, i) => {
       const item = document.createElement('div');
       item.className = `detect-item ${d.class}`;
@@ -461,19 +562,410 @@
         </div>
         <span class="conf">${(d.confidence * 100).toFixed(1)}%</span>
       `;
-      detectList.appendChild(item);
+      list.appendChild(item);
     });
   }
 
-  // ── 状态 ──
-  function setStatus(msg, type) {
-    statusText.textContent = msg;
-    statusBar.className = 'status-bar';
-    if (type === 'loading') statusBar.classList.add('loading');
-    else if (type === 'error') statusText.className = 'error';
-    else if (type === 'success') statusText.className = 'success';
-    else statusText.className = '';
+  function showImageStats(stats, detections) {
+    document.getElementById('imageStatMask').textContent = stats.mask || 0;
+    document.getElementById('imageStatNoMask').textContent = stats.nomask || 0;
+    document.getElementById('imageStatTotal').textContent = stats.total || 0;
+    const avgConf = detections.length
+      ? (detections.reduce((s, d) => s + d.confidence, 0) / detections.length * 100).toFixed(1)
+      : 0;
+    document.getElementById('imageStatAvgConf').textContent = avgConf + '%';
+    document.getElementById('imageStatsGrid').style.display = 'grid';
   }
+
+  // ═══════════════════════════════════════
+  //  标签页 1：图片检测
+  // ═══════════════════════════════════════
+  (function setupImageTab() {
+    const dropZone = document.getElementById('imageDropZone');
+    const fileInput = document.getElementById('imageFileInput');
+    const originalImg = document.getElementById('imageOriginalImg');
+    const resultImg = document.getElementById('imageResultImg');
+    const originalPlaceholder = document.getElementById('imageOriginalPlaceholder');
+    const resultPlaceholder = document.getElementById('imageResultPlaceholder');
+    const originalName = document.getElementById('imageOriginalName');
+    const statusBar = document.getElementById('imageStatusBar');
+    const detectBtn = document.getElementById('imageDetectBtn');
+    const resetBtn = document.getElementById('imageResetBtn');
+    const resultBadge = document.getElementById('imageResultBadge');
+    const detailPanel = document.getElementById('imageDetailPanel');
+    const detailCount = document.getElementById('imageDetailCount');
+
+    let currentFile = null;
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', () => { if (fileInput.files.length) handleFile(fileInput.files[0]); });
+
+    function handleFile(file) {
+      const ext = file.name.split('.').pop().toLowerCase();
+      if (!['jpg','jpeg','png','bmp','webp'].includes(ext)) {
+        setStatus(statusBar, '不支持的文件格式', 'error');
+        return;
+      }
+      if (file.size > 16 * 1024 * 1024) {
+        setStatus(statusBar, '图片过大，最大 16MB', 'error');
+        return;
+      }
+      currentFile = file;
+      originalName.textContent = file.name;
+      const reader = new FileReader();
+      reader.onload = e => {
+        originalImg.src = e.target.result;
+        originalImg.classList.add('show');
+        originalPlaceholder.classList.add('hide');
+        resetResults();
+        detectBtn.disabled = false;
+        setStatus(statusBar, `已选择: ${file.name} (${(file.size/1024/1024).toFixed(1)} MB)`, 'success');
+      };
+      reader.readAsDataURL(file);
+    }
+
+    detectBtn.addEventListener('click', async () => {
+      if (!currentFile) return;
+      setStatus(statusBar, '正在检测中，请稍候...', 'loading');
+      detectBtn.disabled = true;
+      const formData = new FormData();
+      formData.append('image', currentFile);
+      try {
+        const res = await fetch('/predict', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!data.success) {
+          setStatus(statusBar, data.error || '检测失败', 'error');
+          detectBtn.disabled = false;
+          return;
+        }
+        resultImg.src = data.image;
+        resultImg.classList.add('show');
+        resultPlaceholder.classList.add('hide');
+        resultBadge.textContent = `${data.detections.length} 个目标`;
+        showImageStats(data.stats, data.detections);
+        detailPanel.style.display = 'block';
+        showDetections('imageDetectList', data.detections, detailCount);
+        setStatus(statusBar, `检测完成！共检测到 ${data.stats.total} 个人脸`, 'success');
+      } catch (err) {
+        setStatus(statusBar, '请求失败，请确保后端服务已启动', 'error');
+      }
+      detectBtn.disabled = false;
+    });
+
+    resetBtn.addEventListener('click', () => {
+      currentFile = null;
+      fileInput.value = '';
+      originalImg.classList.remove('show');
+      resultImg.classList.remove('show');
+      originalPlaceholder.classList.remove('hide');
+      resultPlaceholder.classList.remove('hide');
+      originalName.textContent = '未选择';
+      resultBadge.textContent = '等待检测';
+      detectBtn.disabled = true;
+      document.getElementById('imageStatsGrid').style.display = 'none';
+      detailPanel.style.display = 'none';
+      document.getElementById('imageDetectList').innerHTML = '';
+      setStatus(statusBar, '等待上传...', '');
+    });
+
+    function resetResults() {
+      resultImg.classList.remove('show');
+      resultPlaceholder.classList.remove('hide');
+      resultBadge.textContent = '等待检测';
+      document.getElementById('imageStatsGrid').style.display = 'none';
+      detailPanel.style.display = 'none';
+    }
+  })();
+
+  // ═══════════════════════════════════════
+  //  标签页 2：视频检测
+  // ═══════════════════════════════════════
+  (function setupVideoTab() {
+    const dropZone = document.getElementById('videoDropZone');
+    const fileInput = document.getElementById('videoFileInput');
+    const statusBar = document.getElementById('videoStatusBar');
+    const detectBtn = document.getElementById('videoDetectBtn');
+    const resetBtn = document.getElementById('videoResetBtn');
+    const resultArea = document.getElementById('videoResultArea');
+    const player = document.getElementById('videoResultPlayer');
+    const resultPlaceholder = document.getElementById('videoResultPlaceholder');
+    const resultBadge = document.getElementById('videoResultBadge');
+    const timeline = document.getElementById('videoTimeline');
+    const timelineCount = document.getElementById('videoTimelineCount');
+
+    let currentFile = null;
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+    dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+    dropZone.addEventListener('drop', e => {
+      e.preventDefault();
+      dropZone.classList.remove('dragover');
+      if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+    });
+    fileInput.addEventListener('change', () => { if (fileInput.files.length) handleFile(fileInput.files[0]); });
+
+    function handleFile(file) {
+      const ext = file.name.split('.').pop().toLowerCase();
+      if (!['mp4','avi','mov','mkv','wmv','flv'].includes(ext)) {
+        setStatus(statusBar, '不支持的视频格式', 'error');
+        return;
+      }
+      if (file.size > 200 * 1024 * 1024) {
+        setStatus(statusBar, '视频过大，最大 200MB', 'error');
+        return;
+      }
+      currentFile = file;
+      resetResults();
+      detectBtn.disabled = false;
+      setStatus(statusBar, `已选择: ${file.name} (${(file.size/1024/1024).toFixed(1)} MB)`, 'success');
+    }
+
+    detectBtn.addEventListener('click', async () => {
+      if (!currentFile) return;
+      setStatus(statusBar, '正在检测中，请稍候...', 'loading');
+      detectBtn.disabled = true;
+
+      const formData = new FormData();
+      formData.append('video', currentFile);
+
+      try {
+        const res = await fetch('/predict_video', { method: 'POST', body: formData });
+        const data = await res.json();
+        if (!data.success) {
+          setStatus(statusBar, data.error || '检测失败', 'error');
+          detectBtn.disabled = false;
+          return;
+        }
+
+        // 显示视频
+        player.src = data.video;
+        player.classList.add('show');
+        resultPlaceholder.classList.add('hide');
+        resultBadge.textContent = `${data.processed_frames} 帧处理完毕`;
+
+        // 统计
+        document.getElementById('videoStatDuration').textContent = data.duration_sec + 's';
+        document.getElementById('videoStatMask').textContent = data.aggregate_stats.mask;
+        document.getElementById('videoStatNoMask').textContent = data.aggregate_stats.nomask;
+        document.getElementById('videoStatFrames').textContent = data.processed_frames;
+
+        // 帧时间线
+        buildTimeline(data.frame_summary);
+
+        resultArea.style.display = 'block';
+        setStatus(statusBar, `检测完成！共处理 ${data.processed_frames} 帧`, 'success');
+      } catch (err) {
+        setStatus(statusBar, '请求失败，请确保后端服务已启动', 'error');
+      }
+      detectBtn.disabled = false;
+    });
+
+    resetBtn.addEventListener('click', () => {
+      currentFile = null;
+      fileInput.value = '';
+      detectBtn.disabled = true;
+      player.classList.remove('show');
+      player.src = '';
+      resultPlaceholder.classList.remove('hide');
+      resultBadge.textContent = '等待检测';
+      resultArea.style.display = 'none';
+      timeline.innerHTML = '';
+      setStatus(statusBar, '等待上传...', '');
+    });
+
+    function resetResults() {
+      player.classList.remove('show');
+      player.src = '';
+      resultPlaceholder.classList.remove('hide');
+      resultBadge.textContent = '等待检测';
+      resultArea.style.display = 'none';
+    }
+
+    function buildTimeline(frames) {
+      timeline.innerHTML = '';
+      timelineCount.textContent = frames.length + ' 帧';
+      if (!frames.length) {
+        timeline.innerHTML = '<div class="empty-list">无帧数据</div>';
+        return;
+      }
+      const maxTotal = Math.max(...frames.map(f => f.total || 0), 1);
+      frames.forEach(f => {
+        const item = document.createElement('div');
+        item.className = 'timeline-item';
+        const maskPct = (f.mask / maxTotal * 100).toFixed(0);
+        const nomaskPct = (f.nomask / maxTotal * 100).toFixed(0);
+        item.innerHTML = `
+          <span class="t">${f.time_sec}s</span>
+          <div class="bar-wrap">
+            <div class="bar-mask" style="width:${maskPct}%"></div>
+            <div class="bar-nomask" style="width:${nomaskPct}%"></div>
+          </div>
+          <span class="counts">😷${f.mask} ⚠️${f.nomask}</span>
+        `;
+        // 点击跳转到视频对应时间
+        item.style.cursor = 'pointer';
+        item.addEventListener('click', () => {
+          const player = document.getElementById('videoResultPlayer');
+          if (player) player.currentTime = f.time_sec;
+        });
+        timeline.appendChild(item);
+      });
+    }
+  })();
+
+  // ═══════════════════════════════════════
+  //  标签页 3：摄像头检测
+  // ═══════════════════════════════════════
+  (function setupCameraTab() {
+    const startBtn = document.getElementById('cameraStartBtn');
+    const stopBtn = document.getElementById('cameraStopBtn');
+    const statusBar = document.getElementById('cameraStatusBar');
+    const video = document.getElementById('cameraVideo');
+    const videoPlaceholder = document.getElementById('cameraPlaceholder');
+    const liveBadge = document.getElementById('cameraLiveBadge');
+    const resultImg = document.getElementById('cameraResultImg');
+    const resultPlaceholder = document.getElementById('cameraResultPlaceholder');
+    const resultBadge = document.getElementById('cameraResultBadge');
+    const liveStats = document.getElementById('cameraLiveStats');
+    const detailPanel = document.getElementById('cameraDetailPanel');
+    const detailCount = document.getElementById('cameraDetailCount');
+
+    let stream = null;
+    let captureInterval = null;
+    let isDetecting = false;
+    let camDetectCount = 0, camMaskCount = 0, camNoMaskCount = 0;
+
+    startBtn.addEventListener('click', startCamera);
+    stopBtn.addEventListener('click', stopCamera);
+
+    async function startCamera() {
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' },
+          audio: false,
+        });
+        video.srcObject = stream;
+        video.classList.add('show');
+        videoPlaceholder.classList.add('hide');
+        liveBadge.textContent = '● 运行中';
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+        setStatus(statusBar, '摄像头已开启，正在实时检测...', 'success');
+        liveStats.style.display = 'flex';
+
+        // 每 1.5 秒捕获一帧检测
+        captureInterval = setInterval(captureAndDetect, 1500);
+        // 立即检测一次
+        setTimeout(captureAndDetect, 500);
+      } catch (err) {
+        setStatus(statusBar, '无法访问摄像头: ' + err.message, 'error');
+      }
+    }
+
+    function stopCamera() {
+      if (captureInterval) {
+        clearInterval(captureInterval);
+        captureInterval = null;
+      }
+      if (stream) {
+        stream.getTracks().forEach(t => t.stop());
+        stream = null;
+      }
+      video.srcObject = null;
+      video.classList.remove('show');
+      videoPlaceholder.classList.remove('hide');
+      liveBadge.textContent = '已停止';
+      startBtn.disabled = false;
+      stopBtn.disabled = true;
+      isDetecting = false;
+      setStatus(statusBar, '摄像头已关闭', '');
+    }
+
+    async function captureAndDetect() {
+      if (isDetecting) return; // 防止并发
+      isDetecting = true;
+
+      // 从 video 截取帧到 canvas
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth || 640;
+      canvas.height = video.videoHeight || 480;
+      const ctx = canvas.getContext('2d');
+      // 镜像翻转（与显示一致）
+      ctx.translate(canvas.width, 0);
+      ctx.scale(-1, 1);
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+      canvas.toBlob(async (blob) => {
+        if (!blob) { isDetecting = false; return; }
+        const formData = new FormData();
+        formData.append('image', blob, 'camera_frame.jpg');
+
+        try {
+          const res = await fetch('/predict', { method: 'POST', body: formData });
+          const data = await res.json();
+          if (!data.success) {
+            document.getElementById('camStatusIndicator').textContent = '● 检测失败';
+            document.getElementById('camStatusIndicator').style.color = '#ff6b6b';
+            isDetecting = false;
+            return;
+          }
+
+          // 更新结果图片
+          resultImg.src = data.image;
+          resultImg.classList.add('show');
+          resultPlaceholder.classList.add('hide');
+          resultBadge.textContent = data.detections.length + ' 个目标';
+
+          // 更新统计
+          camDetectCount++;
+          camMaskCount += data.stats.mask || 0;
+          camNoMaskCount += data.stats.nomask || 0;
+          document.getElementById('camDetectCount').textContent = camDetectCount;
+          document.getElementById('camMaskCount').textContent = camMaskCount;
+          document.getElementById('camNoMaskCount').textContent = camNoMaskCount;
+
+          // 状态指示
+          const hasNomask = (data.stats.nomask || 0) > 0;
+          const indicator = document.getElementById('camStatusIndicator');
+          if (hasNomask) {
+            indicator.textContent = '⚠️ 有人未戴口罩';
+            indicator.style.color = '#ff6b6b';
+          } else if (data.stats.total > 0) {
+            indicator.textContent = '✅ 全部已佩戴';
+            indicator.style.color = '#51cf66';
+          } else {
+            indicator.textContent = '● 未检测到人脸';
+            indicator.style.color = '#f39c12';
+          }
+
+          // 显示检测明细
+          detailPanel.style.display = 'block';
+          showDetections('cameraDetectList', data.detections, detailCount);
+
+        } catch (err) {
+          console.error('摄像头检测请求失败:', err);
+        }
+        isDetecting = false;
+      }, 'image/jpeg', 0.8);
+    }
+
+    // 页面离开时关闭摄像头
+    window.addEventListener('beforeunload', () => {
+      if (stream) stream.getTracks().forEach(t => t.stop());
+      if (captureInterval) clearInterval(captureInterval);
+    });
+  })();
+
+})();
 </script>
 </body>
 </html>
