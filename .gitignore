@@ -38,6 +38,8 @@ github_key.txt
 
 # IDE
 .reasonix/
+.codegraph/
+reasonix.toml
 # Duplicate
 MaskDetect-YOLOv4-PyTorch-master (1)/
 
