@@ -1,6 +1,6 @@
 // 口罩检测系统 - Cloudflare Worker
 // 托管 public/ 静态资源 + 代理 API 到后端隧道
-const BACKEND_TUNNEL = 'https://64fead7c1b290c.lhr.life';
+const BACKEND_TUNNEL = 'https://b2d52e0bb5fbeb.lhr.life';
 
 export default {
   async fetch(request, env) {
